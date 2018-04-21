@@ -11,11 +11,16 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 def status_list_analysis(statuslist=[]):
     #setup our intenisity analyzer
     sia = SentimentIntensityAnalyzer()
-    scores = {}
+    s_scores =[]
     for status in statuslist:
         score = sia.polarity_scores(status)
-        scores[status] = score
-    print(scores)
+        print(score)
+        _score = [status]
+        for s in score:
+            _score.append(score[s])
+        s_scores.append(_score)
+    
+    return s_scores
 
 def clean_status(status=''):
     #eventually we will clean this up
