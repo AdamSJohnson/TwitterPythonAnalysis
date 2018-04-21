@@ -17,7 +17,7 @@ def requestToken(auth_handler):
     try:
         redirect_url = auth_handler.get_authorization_url()
     except:
-        print "Error! Failed to get request token."
+        print ("Error! Failed to get request token.")
         exit()
 
 
@@ -49,7 +49,7 @@ def getUserTweets(username, start, end, number_of_tweets):
 #connect to the tweepy api
 auth = tweepy.OAuthHandler(CK, SK)
 auth.set_access_token(AT, ST)
-auth = tweepy.API(auth)
+#auth = tweepy.API(auth)
 requestToken(auth)
 api = tweepy.API(auth)
 
