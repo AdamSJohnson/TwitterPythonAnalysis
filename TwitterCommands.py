@@ -33,7 +33,7 @@ def getUserTweets(username, start, end, sample_size):
     		list_of_tweets.append(random_tweet)
     	i += 1
 
-    #go through the list of tweet objects and parse out all of the tweet.text
+    #go throuvgh the list of tweet objects and parse out all of the tweet.text
     #take all of that and add it to a list
   	#return the list of tweet text right after
     list_of_tweet_text = []
@@ -44,14 +44,6 @@ def getUserTweets(username, start, end, sample_size):
 
    	return list_of_tweet_text
 
-
-'''
-#connect to the tweepy api
-auth = tweepy.OAuthHandler(CK, SK)
-auth.set_access_token(AT, ST)
-requestToken(auth)
-api = tweepy.API(auth)
-'''
 
 start = datetime.datetime(2016, 1, 1, 0, 0)
 end = datetime.datetime(2019, 12, 31, 23, 59)
