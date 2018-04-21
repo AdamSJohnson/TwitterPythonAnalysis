@@ -49,5 +49,5 @@ start = datetime.datetime(2016, 1, 1, 0, 0)
 end = datetime.datetime(2019, 12, 31, 23, 59)
 print start
 print end
-list_ = getUserTweets("realdonaldtrump", start, end, 15)
+list_ = getUserTweets("realdonaldtrump", start, end, 100)
 print len(list_)
