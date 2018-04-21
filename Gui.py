@@ -10,9 +10,10 @@ from tkinter import ttk
 from tkinter.font import Font
 from tkinter import VERTICAL, HORIZONTAL
 import AnalysisCommands as ac
-
+from TwitterCommands import getUserTweets
 
 from datetime import date
+import datetime
     
 
 class tWindow(tk.Toplevel):
@@ -379,8 +380,15 @@ class UserWindow(tk.Toplevel):
         except ValueError:
             print('Value Error occured only searching based on hash')
             print('Searching based on user')
+            self.start = datetime.datetime(2016, 1, 1, 0, 0)
+            self.end = datetime.datetime(2019, 12, 31, 23, 59)
+            self.statuses = getUserTweets(self.user,self.start,self.end,1000)
+            
+            self.newWindow = tk.Toplevel(self.master)
+            self.app = CellWindow(self.newWindow, intensities=ac.status_list_analysis(statuslist=self.statuses))
+
         self.destroy()
-        return 0
+        
 
 
 
