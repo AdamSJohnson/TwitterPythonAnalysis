@@ -26,28 +26,30 @@ def getUserTweets(username, start, end, sample_size):
     #grab all of the random tweets made by the user.
     i = 0
     while i < len(tweets) and len(list_of_tweets) <= sample_size:
-    	random_tweet = random.choice(tweets)
-    	tweet = tweets[i]
-    	if (random_tweet not in list_of_tweets) and (start <= tweet.created_at) and (end >= tweet.created_at):
-    		print(tweet.created_at, tweet.text, "\n")
-    		list_of_tweets.append(random_tweet)
-    	i += 1
+        random_tweet = random.choice(tweets)
+        tweet = tweets[i]
+        if (random_tweet not in list_of_tweets) and (start <= tweet.created_at) and (end >= tweet.created_at):
+            print(tweet.created_at, tweet.text, "\n")
+            list_of_tweets.append(random_tweet)
+        i += 1
 
     #go throuvgh the list of tweet objects and parse out all of the tweet.text
     #take all of that and add it to a list
-  	#return the list of tweet text right after
+    #return the list of tweet text right after
     list_of_tweet_text = []
-    print len(list_of_tweets)
-    for i in range(len(list_of_tweets)):
-    	list_of_tweet_text.append(list_of_tweets[i].text)
-    	print len(list_of_tweets)
+    #print len(list_of_tweets)
+    for i in list_of_tweets:
+        list_of_tweet_text.append(i.text)
+        #print len(list_of_tweets)
 
-   	return list_of_tweet_text
+    return list_of_tweet_text
 
 
 start = datetime.datetime(2016, 1, 1, 0, 0)
 end = datetime.datetime(2019, 12, 31, 23, 59)
-print start
-print end
+#print start
+#print end
 list_ = getUserTweets("realdonaldtrump", start, end, 15)
-print len(list_)
+#print len(list_)
+print(list_)
+print(len(list_))
