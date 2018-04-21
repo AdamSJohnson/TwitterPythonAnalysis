@@ -54,26 +54,50 @@ class HashtagWindow(tk.Toplevel):
 
         args = {'relief': tk.FLAT}
         args.update(look)
-
+        self.topFrame = tk.Frame(self)
         #Need a field for hashtag grabbing
-        self.label1 = tk.Label(self, text='Hashtag(#)').pack()
-        self.hashentry = tk.Entry(self)
-        self.hashentry.pack(side=tk.TOP)
+        self.label1 = tk.Label(self.topFrame, text='Hashtag(#)').pack(side=tk.LEFT)
+        self.hashentry = tk.Entry(self.topFrame)
+        self.hashentry.pack(side=tk.RIGHT)
+        self.topFrame.pack(side=tk.TOP)
 
+        self.fromFrame = tk.Frame(self)
         #need a field for Start date grabbing
         #month selection
-
+        self.label2 = tk.Label(self.fromFrame, text='From').pack(side=LEFT)
+        self.montha = tk.Entry(self.fromFrame,width=5)
+        self.montha.pack(side=tk.LEFT)
         #day selection
 
+        self.daya = tk.Entry(self.fromFrame,width=5)
+        self.daya.pack(side=tk.LEFT)
         #year selectinon
+        self.yeara = tk.Entry(self.fromFrame,width=5)
+        self.yeara.pack(side=tk.LEFT)
+        self.fromFrame.pack()
 
 
         #need a field for end date grabbing
-        
-        self.confirm = tk.Button(self, text='confirm')
+        self.toFrame = tk.Frame(self)
+        #need a field for Start date grabbing
+        #month selection
+        self.label3 = tk.Label(self.toFrame, text='To').pack(side=LEFT)
+        self.monthb = tk.Entry(self.toFrame,width=5)
+        self.monthb.pack(side=tk.LEFT)
+        #day selection
+
+        self.dayb = tk.Entry(self.toFrame,width=5)
+        self.dayb.pack(side=tk.LEFT)
+        #year selectinon
+        self.yearb = tk.Entry(self.toFrame,width=5)
+        self.yearb.pack(side=tk.RIGHT)
+        self.toFrame.pack()
+
+
+        self.confirm = tk.Button(self, text='confirm',anchor=tk.W)
         self.confirm.pack(side=tk.TOP)
 
-        self.quitb = tk.Button(self, text='Quit', command=self.close_window)
+        self.quitb = tk.Button(self, text='Quit', command=self.close_window, anchor=tk.W)
         self.quitb.pack()
         
     def close_window(self):
