@@ -165,7 +165,7 @@ class introWindow(tk.Frame):
         args = {'relief': tk.FLAT}
         args.update(look)
 
-        self.button_1 = tk.Button(self, text='@',width=25)
+        self.button_1 = tk.Button(self, text='@',width=25, command=self.user_window)
         self.button_1.pack(side = tk.TOP)
 
         self.button_2 = tk.Button(self, text='#',command=self.hash_window, width=25)
@@ -186,6 +186,9 @@ class introWindow(tk.Frame):
     def hash_window(self):
         
         self.app = HashtagWindow(self.master)
+
+    def user_window(self):
+        self.app = UserWindow(self.master)
 
 
 class CellWindow:
@@ -269,6 +272,116 @@ class CellWindow:
 
         # reverse sort direction for next sort operation
         CellWindow.SortDir = not descending
+
+class UserWindow(tk.Toplevel):
+    def __init__(self, master, frame_look={}, **look):
+        args = dict(relief=tk.SUNKEN, border=1)
+        args.update(frame_look)
+        tk.Toplevel.__init__(self, master, **args)
+
+        args = {'relief': tk.FLAT}
+        args.update(look)
+        self.topFrame = tk.Frame(self)
+        #Need a field for hashtag grabbing
+        self.label1 = tk.Label(self.topFrame, text='User').pack(side=tk.LEFT)
+        self.userentry = tk.Entry(self.topFrame)
+        self.userentry.pack(side=tk.RIGHT)
+        self.topFrame.pack(side=tk.TOP)
+
+        self.fromFrame = tk.Frame(self)
+        #need a field for Start date grabbing
+        #month selection
+        self.label2 = tk.Label(self.fromFrame, text='From').pack(side=LEFT)
+        self.montha = tk.Entry(self.fromFrame,width=5)
+        self.montha.pack(side=tk.LEFT)
+        #day selection
+
+        self.daya = tk.Entry(self.fromFrame,width=5)
+        self.daya.pack(side=tk.LEFT)
+        #year selectinon
+        self.yeara = tk.Entry(self.fromFrame,width=5)
+        self.yeara.pack(side=tk.LEFT)
+        self.fromFrame.pack()
+
+
+        #need a field for end date grabbing
+        self.toFrame = tk.Frame(self)
+        #need a field for Start date grabbing
+        #month selection
+        self.label3 = tk.Label(self.toFrame, text='To').pack(side=LEFT)
+        self.monthb = tk.Entry(self.toFrame,width=5)
+        self.monthb.pack(side=tk.LEFT)
+        #day selection
+
+        self.dayb = tk.Entry(self.toFrame,width=5)
+        self.dayb.pack(side=tk.LEFT)
+        #year selectinon
+        self.yearb = tk.Entry(self.toFrame,width=5)
+        self.yearb.pack(side=tk.RIGHT)
+        self.toFrame.pack()
+
+
+        self.confirm = tk.Button(self, text='confirm',anchor=tk.W, command=self.hashsearching)
+        self.confirm.pack(side=tk.TOP)
+
+        self.quitb = tk.Button(self, text='Quit', command=self.close_window, anchor=tk.W)
+        self.quitb.pack()
+        
+    def close_window(self):
+        self.destroy()
+
+    def hashsearching(self):
+        #get the hashtag
+        try:
+            self.user = self.userentry.get()
+        except tk._tkinter.TclError:
+            print('ay no value')
+            self.destroy()
+            return 0
+
+        if self.user == '':
+            print('no search')
+            self.destroy()
+            return 0
+        print(self.user)
+        try:
+            self.month_a = self.montha.get()
+            self.day_a = self.daya.get()
+            self.year_a = self.yeara.get()
+
+            self.month_b = self.monthb.get()
+            self.day_b = self.dayb.get()
+            self.year_b = self.yearb.get()
+
+        except tk._tkinter.TclError:
+            print('no search')
+            self.destroy()
+            return 0
+        try:
+            print(self.user)
+            self.moa = int(self.month_a)
+            self.daa = int(self.day_a)
+            self.yea = int(self.year_a)
+
+            self.mob = int(self.month_b)
+            self.dab = int(self.day_b)
+            self.yeb = int(self.year_b)
+
+            self.adate = date(self.yea,self.moa,self.daa)
+            self.bdate = date(self.yea,self.moa,self.daa)
+
+            if(self.adate > self.bdate):
+                #search from bdate to adate
+                print('Searchin B TO A')
+            else:
+                #search adate to bdate
+                print('Searchin A TO B')
+        except ValueError:
+            print('Value Error occured only searching based on hash')
+            print('Searching based on user')
+        self.destroy()
+        return 0
+
 
 
 if __name__ == '__main__':        
