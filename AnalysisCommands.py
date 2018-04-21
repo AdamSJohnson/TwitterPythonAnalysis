@@ -19,6 +19,7 @@ def status_list_analysis(statuslist=[]):
 
 def clean_status(status=''):
     #eventually we will clean this up
+    #test
     return status
 
 if __name__ == '__main__':
@@ -41,5 +42,5 @@ if __name__ == '__main__':
     "Today SUX!",    #  negative slang with capitalization emphasis
     "Today kinda sux! But I'll get by, lol" # mixed sentiment example with slang and constrastive conjunction "but"
     ]
-    
+
     status_list_analysis(statuslist=sentences)
