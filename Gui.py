@@ -12,7 +12,7 @@ from tkinter import VERTICAL, HORIZONTAL
 import AnalysisCommands as ac
 
 
-
+from datetime import date
     
 
 class tWindow(tk.Toplevel):
@@ -94,7 +94,7 @@ class HashtagWindow(tk.Toplevel):
         self.toFrame.pack()
 
 
-        self.confirm = tk.Button(self, text='confirm',anchor=tk.W)
+        self.confirm = tk.Button(self, text='confirm',anchor=tk.W, command=self.hashsearching)
         self.confirm.pack(side=tk.TOP)
 
         self.quitb = tk.Button(self, text='Quit', command=self.close_window, anchor=tk.W)
@@ -102,6 +102,58 @@ class HashtagWindow(tk.Toplevel):
         
     def close_window(self):
         self.destroy()
+
+    def hashsearching(self):
+        #get the hashtag
+        try:
+            self.hashtag = self.hashentry.get()
+        except tk._tkinter.TclError:
+            print('ay no value')
+            self.destroy()
+            return 0
+
+        if self.hashtag == '':
+            print('no search')
+            self.destroy()
+            return 0
+        print(self.hashtag)
+        try:
+            self.month_a = self.montha.get()
+            self.day_a = self.daya.get()
+            self.year_a = self.yeara.get()
+
+            self.month_b = self.monthb.get()
+            self.day_b = self.dayb.get()
+            self.year_b = self.yearb.get()
+
+        except tk._tkinter.TclError:
+            print('no search')
+            self.destroy()
+            return 0
+        try:
+            print(self.hashtag)
+            self.moa = int(self.month_a)
+            self.daa = int(self.day_a)
+            self.yea = int(self.year_a)
+
+            self.mob = int(self.month_b)
+            self.dab = int(self.day_b)
+            self.yeb = int(self.year_b)
+
+            self.adate = date(self.yea,self.moa,self.daa)
+            self.bdate = date(self.yea,self.moa,self.daa)
+
+            if(self.adate > self.bdate):
+                #search from bdate to adate
+                print('Searchin B TO A')
+            else:
+                #search adate to bdate
+                print('Searchin A TO B')
+        except ValueError:
+            print('Value Error occured only searching based on hash')
+            print('Searching based on hashtag')
+        self.destroy()
+        return 0
 
 
 class introWindow(tk.Frame):
