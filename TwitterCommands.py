@@ -5,9 +5,7 @@ import tweepy
 import random
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler, Stream
-<<<<<<< HEAD
 from TwitterAPIKeys import API
-=======
 from TwitterAPIKeys import CONSUMER_KEY as CK
 from TwitterAPIKeys import SECRET_KEY as SK
 from TwitterAPIKeys import ACCESS_TOKEN as AT
@@ -22,8 +20,6 @@ def requestToken(auth_handler):
     except:
         print ("Error! Failed to get request token.")
         exit()
->>>>>>> e85777d676d2549f30eb9d2c4070e9c1c42c0e9d
-
 
 '''
 returns a list of a bunch of random tweets#
@@ -42,7 +38,6 @@ def getUserTweets(username, start, end, sample_size):
     
     #grab all of the random tweets made by the user.
     i = 0
-<<<<<<< HEAD
     while i < len(tweets) and len(list_of_tweets) <= sample_size:
     	random_tweet = random.choice(tweets)
     	tweet = tweets[i]
@@ -69,7 +64,6 @@ print start
 print end
 list_ = getUserTweets("realdonaldtrump", start, end, 15)
 print len(list_)
-=======
     while i < number_of_tweets:
         random_tweet = random.choice(tweets)
         if (random_tweet in list_of_tweets) or (date(random_tweet.created_at) < start) or (date(random_tweet.created_at) > end):
@@ -90,4 +84,3 @@ api = tweepy.API(auth)
 start = datetime.date(2016, 12, 31)
 end = datetime.date(2018, 12, 31)
 #getUserTweets("realdonaldtrump", start, end, 100)
->>>>>>> e85777d676d2549f30eb9d2c4070e9c1c42c0e9d
