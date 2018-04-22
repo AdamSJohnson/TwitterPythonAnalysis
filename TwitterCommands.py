@@ -65,16 +65,18 @@ def getHashtagTweets(hashtag, start):
 
 #____________________________________________________________
 
-start = datetime.datetime(2016, 1, 1, 0, 0)
-end = datetime.datetime(2019, 12, 31, 23, 59)
-'''
-list_ = getUserTweets("realdonaldtrump", start, end)
-for i in list_:
-    print i, "\n\n"
-#list2 = getHashtagTweets("#cool", start, end, 15)
-#for i in list2:
- #   print i, "\n\n"
- '''
-x = getHashtagTweets("#fun", start)
-for i in x:
-    print i
+if __name__ == '__main__':
+    
+    start = datetime.datetime(2016, 1, 1, 0, 0)
+    end = datetime.datetime(2019, 12, 31, 23, 59)
+    '''
+    list_ = getUserTweets("realdonaldtrump", start, end)
+    for i in list_:
+        print i, "\n\n"
+    #list2 = getHashtagTweets("#cool", start, end, 15)
+    #for i in list2:
+     #   print i, "\n\n"
+     '''
+    x = getHashtagTweets("#fun", start)
+    for i in x:
+        print (i)

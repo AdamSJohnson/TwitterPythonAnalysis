@@ -11,6 +11,7 @@ from tkinter.font import Font
 from tkinter import VERTICAL, HORIZONTAL
 import AnalysisCommands as ac
 from TwitterCommands import getUserTweets
+from TwitterCommands import getHashtagTweets
 
 from datetime import date
 import datetime
@@ -87,12 +88,6 @@ class HashtagWindow(tk.Toplevel):
         self.monthb.pack(side=tk.LEFT)
         #day selection
 
-        self.dayb = tk.Entry(self.toFrame,width=5)
-        self.dayb.pack(side=tk.LEFT)
-        #year selectinon
-        self.yearb = tk.Entry(self.toFrame,width=5)
-        self.yearb.pack(side=tk.RIGHT)
-        self.toFrame.pack()
 
 
         self.confirm = tk.Button(self, text='confirm',anchor=tk.W, command=self.hashsearching)
@@ -123,10 +118,6 @@ class HashtagWindow(tk.Toplevel):
             self.day_a = self.daya.get()
             self.year_a = self.yeara.get()
 
-            self.month_b = self.monthb.get()
-            self.day_b = self.dayb.get()
-            self.year_b = self.yearb.get()
-
         except tk._tkinter.TclError:
             print('no search')
             self.destroy()
@@ -137,19 +128,20 @@ class HashtagWindow(tk.Toplevel):
             self.daa = int(self.day_a)
             self.yea = int(self.year_a)
 
-            self.mob = int(self.month_b)
-            self.dab = int(self.day_b)
-            self.yeb = int(self.year_b)
+            self.adate = datetime.datetime(self.yea,self.moa,self.daa,0,0)
 
-            self.adate = date(self.yea,self.moa,self.daa)
-            self.bdate = date(self.yea,self.moa,self.daa)
+            self.statuses = getHashtagTweets(self.hashtag,self.adate)
+            self.temp = []
+            for tweet in self.statuses:
+                char_list = [tweet[j] for j in range(len(tweet)) if ord(tweet[j]) in range(65536)]
+                tweet=''
+                for j in char_list:
+                    tweet=tweet+j
+                self.temp.append(tweet)
+            self.statuses = self.temp
+            self.newWindow = tk.Toplevel(self.master)
+            self.app = CellWindow(self.newWindow, intensities=ac.status_list_analysis(statuslist=self.statuses))
 
-            if(self.adate > self.bdate):
-                #search from bdate to adate
-                print('Searchin B TO A')
-            else:
-                #search adate to bdate
-                print('Searchin A TO B')
         except ValueError:
             print('Value Error occured only searching based on hash')
             print('Searching based on hashtag')
@@ -223,7 +215,10 @@ class CellWindow:
         file_obj = open('export.txt', 'w')
         for item in self.data:
             for x in item:
-                file_obj.write(x + " ")
+                try:
+                    file_obj.write(x + " ")
+                except UnicodeEncodeError:
+                    continue
             file_obj.write('\r\n')
 
 
@@ -357,7 +352,7 @@ class UserWindow(tk.Toplevel):
         except tk._tkinter.TclError:
             print('no search')
             self.destroy()
-            return 0
+            
         try:
             print(self.user)
             self.moa = int(self.month_a)
@@ -369,20 +364,47 @@ class UserWindow(tk.Toplevel):
             self.yeb = int(self.year_b)
 
             self.adate = date(self.yea,self.moa,self.daa)
-            self.bdate = date(self.yea,self.moa,self.daa)
+            self.bdate = date(self.yeb,self.mob,self.dab)
 
             if(self.adate > self.bdate):
                 #search from bdate to adate
                 print('Searchin B TO A')
+                self.bdate = datetime.datetime(self.yeb,self.mob,self.dab,0,0)
+                self.adate = datetime.datetime(self.yea,self.moa,self.daa,23,59)
+                self.statuses = getUserTweets(self.user,self.bdate,self.adate)
+                self.temp = []
+                for tweet in self.statuses:
+                    char_list = [tweet[j] for j in range(len(tweet)) if ord(tweet[j]) in range(65536)]
+                    tweet=''
+                    for j in char_list:
+                        tweet=tweet+j
+                    self.temp.append(tweet)
+                self.statuses = self.temp
+                self.newWindow = tk.Toplevel(self.master)
+                self.app = CellWindow(self.newWindow, intensities=ac.status_list_analysis(statuslist=self.statuses))
+
             else:
                 #search adate to bdate
                 print('Searchin A TO B')
+                self.bdate = datetime.datetime(self.yeb,self.mob,self.dab,23,59)
+                self.adate = datetime.datetime(self.yea,self.moa,self.daa,0,0)
+                self.statuses = getUserTweets(self.user,self.adate,self.bdate)
+                self.temp = []
+                for tweet in self.statuses:
+                    char_list = [tweet[j] for j in range(len(tweet)) if ord(tweet[j]) in range(65536)]
+                    tweet=''
+                    for j in char_list:
+                        tweet=tweet+j
+                    self.temp.append(tweet)
+                self.statuses = self.temp
+                self.newWindow = tk.Toplevel(self.master)
+                self.app = CellWindow(self.newWindow, intensities=ac.status_list_analysis(statuslist=self.statuses))
         except ValueError:
             print('Value Error occured only searching based on hash')
             print('Searching based on user')
             self.start = datetime.datetime(2016, 1, 1, 0, 0)
             self.end = datetime.datetime(2019, 12, 31, 23, 59)
-            self.statuses = getUserTweets(self.user,self.start,self.end,1000)
+            self.statuses = getUserTweets(self.user,self.start,self.end)
             self.temp = []
             for tweet in self.statuses:
                 char_list = [tweet[j] for j in range(len(tweet)) if ord(tweet[j]) in range(65536)]
