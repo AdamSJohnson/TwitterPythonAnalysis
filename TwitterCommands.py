@@ -49,8 +49,14 @@ def getUserTweets(username, start, end):
     return list_of_tweets
 
 
-
-def getHashtagTweets(hashtag, start, end):
+'''
+returns a list of tweets with the given hashtag in them.
+paramaters:
+        string hashtag (the hashtag given to search tweets for)
+        datetime start (the date to start looking for tweets from)
+return type: list[] (of tweets)
+'''
+def getHashtagTweets(hashtag, start):
     page = 1
     list_of_tweets = []
     for tweet in tweepy.Cursor(API.search, q=hashtag, rpp=150, lang="en", since=start, count=150).items():
@@ -69,6 +75,6 @@ for i in list_:
 #for i in list2:
  #   print i, "\n\n"
  '''
-x = getHashtagTweets("#fun", start, end)
+x = getHashtagTweets("#fun", start)
 for i in x:
     print i
