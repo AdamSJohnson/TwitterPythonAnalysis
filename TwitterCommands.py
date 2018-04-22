@@ -19,40 +19,31 @@ paramaters:
 return type: list[] (of tweets as text)    
 '''
 def getUserTweets(username, start, end):
+    date_start = datetime.datetime.strptime('31Dec' + str(start), '%d%b%Y') 
+    date_end = datetime.datetime.strptime('31Dec' + str(end), '%d%b%Y')
     user = API.get_user(username)
     tweets = API.user_timeline(screen_name = username, count = user.statuses_count, include_rts = True, tweet_mode="extended")
     list_of_tweets = []
     for tweet in tweets:
-        if (start <= tweet.created_at) and (end >= tweet.created_at):
+        if (date_start <= tweet.created_at) and (date_end >= tweet.created_at):
             list_of_tweets.append(tweet.full_text)
     return list_of_tweets
 
 
-'''
-def getHashtagTweets(hashtag, start, end, sample_size):
-    search_results = API.search(hashtag, text_mode="full_text")
-    list_of_tweets = []
 
-    i = 0
-    while i < len(search_results) and len(list_of_tweets) <= sample_size:
-        random_tweet = random.choice(search_results)
-        if (random_tweet not in list_of_tweets) and (start <= random_tweet.created_at) and (end >= random_tweet.created_at):
-            list_of_tweets.append(random)
-        i += 1
-
-    list_of_tweet_text = []
-    for i in list_of_tweets:
-        list_of_tweet_text.append(i.text)
-    return list_of_tweet_text
-'''
+def getHashtagTweets(hashtag, start, end):
+    search_results = API.search(hashtag, rpp=2000)
+    for i in search_results:
+        print i.text, "\n\n"
 
 
 #____________________________________________________________
 start = datetime.datetime(2016, 1, 1, 0, 0)
 end = datetime.datetime(2019, 12, 31, 23, 59)
-list_ = getUserTweets("realdonaldtrump", start, end)
+list_ = getUserTweets("realdonaldtrump", 2016, 2018)
 for i in list_:
     print i, "\n\n"
 #list2 = getHashtagTweets("#cool", start, end, 15)
 #for i in list2:
  #   print i, "\n\n"
+ #getHashtagTweets
