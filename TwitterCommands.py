@@ -19,8 +19,8 @@ paramaters:
 return type: list[] (of tweets as text)    
 '''
 def getUserTweets(username, start, end):
-    date_start = datetime.datetime.strptime('31Dec' + str(start), '%d%b%Y') 
-    date_end = datetime.datetime.strptime('31Dec' + str(end), '%d%b%Y')
+    date_start = datetime.datetime.strptime('01Jan' + str(start), '%d%b%Y') 
+    date_end = datetime.datetime.strptime('01Jan' + str(end), '%d%b%Y')
     user = API.get_user(username)
     tweets = API.user_timeline(screen_name = username, count = user.statuses_count, include_rts = True, tweet_mode="extended")
     list_of_tweets = []
@@ -40,7 +40,7 @@ def getHashtagTweets(hashtag, start, end):
 #____________________________________________________________
 start = datetime.datetime(2016, 1, 1, 0, 0)
 end = datetime.datetime(2019, 12, 31, 23, 59)
-list_ = getUserTweets("realdonaldtrump", 2016, 2018)
+list_ = getUserTweets("realdonaldtrump", 2016, 2017)
 for i in list_:
     print i, "\n\n"
 #list2 = getHashtagTweets("#cool", start, end, 15)
